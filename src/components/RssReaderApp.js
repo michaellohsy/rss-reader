@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import RssFeeds from './RssFeeds';
-let Parser = require('rss-parser');
+import RssArticleViewer from './RssArticleViewer';
+import { Container, Row, Col } from 'react-bootstrap';
 
+const Parser = require('rss-parser');
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const ls = require('local-storage');
 const rssKey = 'rssKey';
@@ -51,20 +53,33 @@ class RssReaderApp extends Component {
     const res = await Promise.all(promises);
     const articles = res.reduce((prev, cur) => prev.concat(cur.items), []);
     console.log(articles);
+    const sample = articles.splice(0,10);
     this.setState({
-      articles,
+      articles: sample,
     });
   }
 
   render() {
     return (
-      <div>
-        RSS Reader App!
-        <RssFeeds
-          rssItems={this.state.rssFeeds}
-          onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
-          onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}/>
-      </div>
+      <Container fluid>
+        <Row>
+          <Col md={12}>
+            <h1>RSS Reader App!</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={4}>
+            <RssFeeds
+            rssItems={this.state.rssFeeds}
+            onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
+            onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}/>
+          </Col>
+          <Col md={8}>
+            <RssArticleViewer
+            articles={this.state.articles}/>
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }

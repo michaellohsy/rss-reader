@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Col, Form, ListGroup } from 'react-bootstrap';
 import styles from './RssFeeds.module.css';
 
 class RssFeeds extends Component {
@@ -12,7 +13,7 @@ class RssFeeds extends Component {
 
   onRssUrlEnterChanged = e => {
     const url = e.target.value;
-    const errorMessage = !this.isRssLink(url) ? 'Please entera valid URL' : '';
+    const errorMessage = !this.isRssLink(url) ? 'Please enter a valid URL' : '';
     this.setState({
       newRssUrl: url,
       errorMessage,
@@ -38,21 +39,36 @@ class RssFeeds extends Component {
   }
 
   render() {
-  const error = this.state.errorMessage ? <div className={styles.error}>{this.state.errorMessage}</div> : '';
+    const error = this.state.errorMessage ? <div className={styles.error}>{this.state.errorMessage}</div> : '';
     return (
       <div>
-        <form onSubmit={this.onNewRssUrlEntered}>
-          <input type="text" value={this.state.newRssUrl} onChange={this.onRssUrlEnterChanged}/>
-          {error}
-          <button type="submit" disabled={this.state.errorMessage}>Submit</button>
-        </form>
-        <ol>
+        <h5>Feeds</h5>
+        <Form onSubmit={this.onNewRssUrlEntered} className='p-3'>
+          <Form.Row>
+            <Col sm={12} md={9}>
+              <Form.Control type="text" value={this.state.newRssUrl} onChange={this.onRssUrlEnterChanged} placeholder="Enter Rss Url" required/>
+            </Col>
+            <Col sm={12} md={3}>
+              <Button variant="primary" type="submit" disabled={this.state.errorMessage}>Submit</Button>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col sm={12}>
+              {error}
+            </Col>
+          </Form.Row>
+        </Form>
+
+        <div>
+          <ListGroup>
           {this.props.rssItems.map(item => 
-            (<li key={item.key}>{item.url}
-              <button onClick={(e) => this.props.onRssItemDelete(item)}>Delete</button>
-            </li>)
+            (<ListGroup.Item key={item.key}><span>{item.url}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button variant="danger" size="sm" onClick={(e) => this.props.onRssItemDelete(item)}>Delete</Button>
+            </ListGroup.Item>)
           )}
-        </ol>
+          </ListGroup>
+        </div>
+
       </div>
     );
   }
