@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import RssList from './RssList';
+import RssFeeds from './RssFeeds';
 let Parser = require('rss-parser');
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
@@ -11,61 +11,59 @@ class RssReaderApp extends Component {
   constructor(props) {
     super(props)
     this.state = {
-       rssItems: [],
+       rssFeeds: [],
+       articles: [],
     }
     this.parser = new Parser();
   }
 
   componentDidMount() {
-    this.getRssItems();
+    this.getRssFeeds();
   }
 
-  getRssItems = () => {
+  getRssFeeds = () => {
     this.setState({
-      rssItems: ls.get(rssKey) || [],
-    });
+      rssFeeds: ls.get(rssKey) || [],
+    }, () => this.getArticles(this.state.rssFeeds));
   }
 
-  onRssItemAdd = rssItem => {
+  onRssFeedAdd = rssFeed => {
     this.setState({
-      rssItems: [... this.state.rssItems, rssItem],
-      newRssUrl: '',
+      rssFeeds: [... this.state.rssFeeds, rssFeed],
     }, () => {
-      ls.set(rssKey, this.state.rssItems);
+      ls.set(rssKey, this.state.rssFeeds);
     });
   }
 
-  onRssItemDelete = rssItem => {
-    const index = this.state.rssItems.map(item => item.key).indexOf(rssItem.key);
-    const updatedRssItems = [...this.state.rssItems];
+  onRssFeedDelete = rssItem => {
+    const index = this.state.rssFeeds.map(item => item.key).indexOf(rssItem.key);
+    const updatedRssItems = [...this.state.rssFeeds];
     updatedRssItems.splice(index, 1);
     this.setState({
-      rssItems: updatedRssItems,
+      rssFeeds: updatedRssItems,
     }, () => {
-      ls.set(rssKey, this.state.rssItems);
+      ls.set(rssKey, this.state.rssFeeds);
     });
   }
 
-  // componentDidMount() {
-  //   const url = `${CORS_PROXY}https://www.reddit.com/.rss`;
-  //   this.parser.parseURL(url).then(
-  //     res => {
-  //       console.log(res);
-  //     },
-  //     err => {
-  //       console.err(err);
-  //     }
-  //   )
-  // }
+  async getArticles(rssFeeds) {
+    const promises = rssFeeds.map(feed => this.parser.parseURL(`${CORS_PROXY}${feed.url}`));
+    const res = await Promise.all(promises);
+    const articles = res.reduce((prev, cur) => prev.concat(cur.items), []);
+    console.log(articles);
+    this.setState({
+      articles,
+    });
+  }
 
   render() {
     return (
       <div>
         RSS Reader App!
-        <RssList 
-          rssItems={this.state.rssItems}
-          onRssItemAdd={rssItem => this.onRssItemAdd(rssItem)}
-          onRssItemDelete={rssItem => this.onRssItemDelete(rssItem)}/>
+        <RssFeeds
+          rssItems={this.state.rssFeeds}
+          onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
+          onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}/>
       </div>
     )
   }

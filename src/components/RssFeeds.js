@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import styles from './RssList.module.css';
+import styles from './RssFeeds.module.css';
 
-class RssList extends Component {
+class RssFeeds extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -58,4 +58,4 @@ class RssList extends Component {
   }
 }
 
-export default RssList
+export default RssFeeds
