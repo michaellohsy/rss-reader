@@ -42,14 +42,14 @@ class RssFeeds extends Component {
     const error = this.state.errorMessage ? <div className={styles.error}>{this.state.errorMessage}</div> : '';
     return (
       <div>
-        <h5>Feeds</h5>
-        <Form onSubmit={this.onNewRssUrlEntered} className='p-3'>
+        <div className={styles.feedTitle}>Feeds</div>
+        <Form onSubmit={this.onNewRssUrlEntered} className='pt-3 pb-3'>
           <Form.Row>
-            <Col sm={12} md={9}>
-              <Form.Control type="text" value={this.state.newRssUrl} onChange={this.onRssUrlEnterChanged} placeholder="Enter Rss Url" required/>
+            <Col md={12} xl={8}>
+              <Form.Control type="text" value={this.state.newRssUrl} onChange={this.onRssUrlEnterChanged} placeholder="Enter Rss Feed Url" required/>
             </Col>
-            <Col sm={12} md={3}>
-              <Button variant="primary" type="submit" disabled={this.state.errorMessage}>Submit</Button>
+            <Col md={12} xl={4}>
+              <Button variant="primary" type="submit" disabled={this.state.errorMessage} block>Submit</Button>
             </Col>
           </Form.Row>
           <Form.Row>
@@ -62,7 +62,7 @@ class RssFeeds extends Component {
         <div>
           <ListGroup>
           {this.props.rssItems.map(item => 
-            (<ListGroup.Item key={item.key}><span>{item.url}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            (<ListGroup.Item key={item.key}><span className={styles.url}>{item.url}</span>&nbsp;&nbsp;&nbsp;&nbsp;
               <Button variant="danger" size="sm" onClick={(e) => this.props.onRssItemDelete(item)}>Delete</Button>
             </ListGroup.Item>)
           )}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import RssFeeds from './RssFeeds';
 import RssArticleViewer from './RssArticleViewer';
 import { Container, Row, Col } from 'react-bootstrap';
+import styles from './RssReaderApp.module.css';
 
 const Parser = require('rss-parser');
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
@@ -68,13 +69,13 @@ class RssReaderApp extends Component {
           </Col>
         </Row>
         <Row>
-          <Col md={4}>
+          <Col md={3}>
             <RssFeeds
             rssItems={this.state.rssFeeds}
             onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
             onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}/>
           </Col>
-          <Col md={8}>
+          <Col className={styles.right} md={9}>
             <RssArticleViewer
             articles={this.state.articles}/>
           </Col>

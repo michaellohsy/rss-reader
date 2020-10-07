@@ -12,7 +12,6 @@ class RssArticleViewer extends Component {
   render() {
     return (
       <div>
-        <p>{this.props.articles.length} articles found</p>
         {this.props.articles.map(article => 
           (<RssArticle key={article.guid} article={article}/>)
         )}
