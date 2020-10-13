@@ -12,3 +12,28 @@
   font-weight: bold;
   font-size: larger;
 }
+
+.list {
+  text-align: left;
+}
+
+.feedName {
+  font-weight: bold;
+}
+
+.showHideFeed {
+  float: right;
+}
+
+.showHideFeed span {
+  font-size: small;
+  padding-right: 5px;
+}
+
+.showHideFeed div {
+  margin-right: 0px;
+}
+
+.deleteButton {
+  float: right;
+}
