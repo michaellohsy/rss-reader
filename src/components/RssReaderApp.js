@@ -70,7 +70,7 @@ class RssReaderApp extends Component {
     const res = await Promise.all(promises);
     const articles = res.reduce((prev, cur) => prev.concat(cur.items), []);
     console.log(articles);
-    const sample = articles.splice(0,10);
+    const sample = articles.splice(0,50);
     this.setState({
       articles: sample,
     });
