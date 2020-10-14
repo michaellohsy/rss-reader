@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import RssFeeds from './RssFeeds';
 import RssArticleViewer from './RssArticleViewer';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Navbar } from 'react-bootstrap';
 import styles from './RssReaderApp.module.css';
 
 const Parser = require('rss-parser');
@@ -78,27 +78,27 @@ class RssReaderApp extends Component {
 
   render() {
     return (
-      <Container fluid>
-        <Row>
-          <Col md={12}>
-            <h1>RSS Reader App!</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={3}>
-            <RssFeeds
-              rssItems={this.state.rssFeeds}
-              onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
-              onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}
-              onRssItemEnabled={rssItem => this.onRssFeedEnabled(rssItem)}
-            />
-          </Col>
-          <Col className={styles.right} md={9}>
-            <RssArticleViewer
-            articles={this.state.articles}/>
-          </Col>
-        </Row>
-      </Container>
+      <div>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home">RSS Reader</Navbar.Brand>
+        </Navbar>
+        <Container fluid className="pt-2">
+          <Row>
+            <Col md={3} id="feed-col">
+              <RssFeeds
+                rssItems={this.state.rssFeeds}
+                onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
+                onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}
+                onRssItemEnabled={rssItem => this.onRssFeedEnabled(rssItem)}
+              />
+            </Col>
+            <Col className={styles.right} md={9}>
+              <RssArticleViewer
+              articles={this.state.articles}/>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     )
   }
 }

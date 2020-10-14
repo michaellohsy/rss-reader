@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.item-disabled {
+  color: #1b1e21;
+  background-color: #d6d8d9;
+  border-color: #c6c8ca;
+  /* color: gold;
+  background-color: green;
+  border-color: red; */
+}
+
+#feed-col {
+  background-color: #f7f7f7;
+}

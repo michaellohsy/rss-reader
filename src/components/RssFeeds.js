@@ -67,7 +67,7 @@ class RssFeeds extends Component {
     return (
       <div>
         <div className={styles.feedTitle}>Feeds</div>
-        <Form onSubmit={this.onNewRssUrlEntered} className='pt-3 pb-3'>
+        <Form onSubmit={this.onNewRssUrlEntered} className='pt-1 pb-3'>
           <Form.Row>
             <Col md={12} className="pt-2">
               <Form.Control type="text" value={this.state.newRssUrl} onChange={this.onRssUrlEnterChanged} placeholder="Enter Rss Feed Url" required/>
@@ -85,7 +85,7 @@ class RssFeeds extends Component {
         <div className={styles.list}>
           <ListGroup>
           {this.props.rssItems.map(item => 
-            (<ListGroup.Item key={item.key}>
+            (<ListGroup.Item key={item.key} className={`mb-2 ${item.isEnabled ? "" : "item-disabled"}`}>
               <div>
                 <span className={styles.feedName}>{item.name}</span>
                 <span className={styles.showHideFeed}>

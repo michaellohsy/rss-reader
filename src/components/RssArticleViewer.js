@@ -58,7 +58,7 @@ class RssArticleViewer extends Component {
         {pageArticles.map(article =>
           (<RssArticle key={article.guid} article={article}/>)
         )}
-        <Row>
+        <Row className="mt-3">
           <Col md={4}>
             <Pagination>{this.getPagination()}</Pagination>
           </Col>
