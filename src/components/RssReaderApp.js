@@ -16,6 +16,7 @@ class RssReaderApp extends Component {
     this.state = {
        rssFeeds: [],
        articles: [],
+       loading: false,
     }
     this.parser = new Parser();
   }
@@ -64,15 +65,19 @@ class RssReaderApp extends Component {
   }
 
   async getArticles(rssFeeds) {
+    this.setState({
+      loading: true,
+    });
     const promises = rssFeeds
       .filter(feed => feed.isEnabled)
       .map(feed => this.parser.parseURL(`${CORS_PROXY}${feed.url}`));
     const res = await Promise.all(promises);
     const articles = res.reduce((prev, cur) => prev.concat(cur.items), []);
     console.log(articles);
-    const sample = articles.splice(0,50);
+    // const sample = articles.splice(0,50);
     this.setState({
-      articles: sample,
+      articles,
+      loading: false,
     });
   }
 
@@ -94,7 +99,9 @@ class RssReaderApp extends Component {
             </Col>
             <Col className={styles.right} md={9}>
               <RssArticleViewer
-              articles={this.state.articles}/>
+                articles={this.state.articles}
+                loading={this.state.loading}
+              />
             </Col>
           </Row>
         </Container>
