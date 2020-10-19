@@ -77,8 +77,14 @@ class RssReaderApp extends Component {
     const promises = rssFeeds
       .filter(feed => feed.isEnabled)
       .map(feed => this.parser.parseURL(`${CORS_PROXY}${feed.url}`));
-    const res = await Promise.all(promises);
-    const articles = res.reduce((prev, cur) => prev.concat(cur.items), []);
+    const articles = [];
+    for(let i = 0; i < promises.length; i++) {
+      try {
+        const res = await promises[i];
+        articles.push(...res.items);
+      } catch (err) {
+      }
+    }
     this.setState({
       articles,
       loading: false,
