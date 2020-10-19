@@ -51,7 +51,6 @@ class RssFeeds extends Component {
   }
 
   onFeedEnabledChange = item => {
-    // console.log(item);
     this.props.onRssItemEnabled(item);
   }
 

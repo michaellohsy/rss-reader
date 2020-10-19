@@ -66,8 +66,6 @@ class RssArticleViewer extends Component {
   renderPagination = () => {
     const firstIdx = (this.state.page - 1) * this.state.pageSize + 1;
     const lastIdx = (this.state.page - 1) * this.state.pageSize + this.state.pageSize;
-    console.log(firstIdx);
-    console.log(lastIdx);
     return (
       <Row className="mt-3">
         <Col md={4}>
