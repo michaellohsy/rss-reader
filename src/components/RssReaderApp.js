@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import RssFeeds from './RssFeeds';
 import RssArticleViewer from './RssArticleViewer';
-import { Container, Row, Col, Navbar } from 'react-bootstrap';
+import AboutMe from './AboutMe';
+import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import styles from './RssReaderApp.module.css';
 
 const Parser = require('rss-parser');
@@ -83,29 +90,43 @@ class RssReaderApp extends Component {
 
   render() {
     return (
-      <div>
+      <Router>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="#home">RSS Reader</Navbar.Brand>
+          <Navbar.Brand href="/">RSS Reader</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto"></Nav>
+            <Nav>
+              <Nav.Link href="/about">About</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
-        <Container fluid className="pt-2">
-          <Row>
-            <Col md={3} id="feed-col">
-              <RssFeeds
-                rssItems={this.state.rssFeeds}
-                onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
-                onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}
-                onRssItemEnabled={rssItem => this.onRssFeedEnabled(rssItem)}
-              />
-            </Col>
-            <Col className={styles.right} md={9}>
-              <RssArticleViewer
-                articles={this.state.articles}
-                loading={this.state.loading}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+        <Switch>
+          <Route path="/about">
+            <AboutMe></AboutMe>
+          </Route>
+          <Route path="/">
+            <Container fluid className="pt-2">
+            <Row>
+              <Col md={3} id="feed-col">
+                <RssFeeds
+                  rssItems={this.state.rssFeeds}
+                  onRssItemAdd={rssItem => this.onRssFeedAdd(rssItem)}
+                  onRssItemDelete={rssItem => this.onRssFeedDelete(rssItem)}
+                  onRssItemEnabled={rssItem => this.onRssFeedEnabled(rssItem)}
+                />
+              </Col>
+              <Col className={styles.right} md={9}>
+                <RssArticleViewer
+                  articles={this.state.articles}
+                  loading={this.state.loading}
+                />
+              </Col>
+            </Row>
+            </Container>
+          </Route>
+        </Switch>
+      </Router>
     )
   }
 }
