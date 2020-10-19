@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Form, ListGroup } from 'react-bootstrap';
 import styles from './RssFeeds.module.css';
-import { Feed } from '../classes/classes';
+import Feed from '../classes/Feed';
 import { Trash } from 'react-bootstrap-icons';
 
 class RssFeeds extends Component {

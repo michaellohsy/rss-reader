@@ -7,7 +7,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import styles from './RssReaderApp.module.css';
 
@@ -40,7 +39,7 @@ class RssReaderApp extends Component {
 
   onRssFeedAdd = rssFeed => {
     this.setState({
-      rssFeeds: [... this.state.rssFeeds, rssFeed],
+      rssFeeds: [...this.state.rssFeeds, rssFeed],
     }, () => {
       ls.set(rssKey, this.state.rssFeeds);
       this.getArticles(this.state.rssFeeds);

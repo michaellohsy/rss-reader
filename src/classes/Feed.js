@@ -8,7 +8,4 @@ class Feed {
   }
 }
 
-module.exports = {
-  Feed,
-};
-
+export default Feed;
